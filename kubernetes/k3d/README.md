@@ -20,9 +20,9 @@ k3d cluster create mycluster
 
 ## Use Case 
 
-### Creating a cluster with open port `30000` to localhost:8082 with 2 agents 
+### Creating a cluster with open port `30080` to localhost:8082 with 2 agents 
 
-create a cluster, mapping the port `30000` from agent to localhost:8082
+create a cluster, mapping the port `30080` from agent to localhost:8082
 
 ```bash
 k3d cluster create mycluster -p "8082:30080@agent:0" --agents 2
