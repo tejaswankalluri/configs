@@ -1,0 +1,16 @@
+version: "3"
+services:
+  jenkins:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    privileged: true
+    user: root
+    ports:
+      - 8080:8080
+      - 50000:50000
+    container_name: jenkins-maven
+    volumes:
+      - /home/$USER/docker-compose/jenkins-maven/jenkins_configuration:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock

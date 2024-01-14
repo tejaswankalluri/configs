@@ -1,0 +1,32 @@
+version: "3"
+
+services:
+  prometheus:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus-config.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - monitoring-network
+
+  grafana:
+    image: grafana/grafana-oss
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    # volumes:
+    #   - ./grafana-storage:/var/lib/grafana
+    networks:
+      - monitoring-network
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    networks:
+      - monitoring-network
+
+networks:
+  monitoring-network:
+    driver: bridge
