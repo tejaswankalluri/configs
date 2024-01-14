@@ -20,7 +20,7 @@ k3d cluster create mycluster
 
 ## Use Case 
 
-### Creating a cluster with open port `30080` to localhost:8082 with 2 agents 
+### Creating a cluster with open port `30080` to localhost:8082 with 2 agents and runing nginx 
 
 create a cluster, mapping the port `30080` from agent to localhost:8082
 
@@ -29,6 +29,31 @@ k3d cluster create mycluster -p "8082:30080@agent:0" --agents 2
 ```
 
 create a NodePort service for it by copying the following manifest to a file and applying it with `kubectl apply -f .`
+- deploymen.yml
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+spec:
+  replicas: 3  # Number of replicas (pods) to run
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx-container
+        image: nginx:latest
+        ports:
+        - containerPort: 80
+```
+
+- service.yml
 
 ```yaml
 apiVersion: v1
