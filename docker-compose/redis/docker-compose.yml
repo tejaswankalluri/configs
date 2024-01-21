@@ -1,0 +1,10 @@
+version: "3"
+services:
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - /home/$USER/docker-compose/redis/data:/root/redis
+      - /home/$USER/docker-compose/redis/redis.conf:/usr/local/etc/redis/redis.conf
