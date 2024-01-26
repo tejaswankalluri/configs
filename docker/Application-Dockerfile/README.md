@@ -25,13 +25,24 @@ RUN pip install -r requirements.txt
 
 ## Java (maven)
 ```Dockerfile
-FROM openjdk:17
+FROM maven:3.8.4-openjdk-17 AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean install
 
+FROM openjdk:17-jre-slim
+
+# Set the working directory to /app
+WORKDIR /app
+# Copy the generated SNAPSHOT jar from build to /app
+COPY --from=build /app/target/<APP>.jar app.jar
+
+# Make port 8080 available to the world outside this container
 EXPOSE 8080
 
-ADD target/buyLeaf-0.0.1-SNAPSHOT.jar app.jar
-
-ENTRYPOINT ["java","-jar","/app.jar"]
+# Run the JAR file when the container launches
+CMD ["java", "-jar", "app.jar"]
 ```
 
 ## Node js (npm)
