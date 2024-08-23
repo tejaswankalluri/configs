@@ -4,22 +4,25 @@ services:
   db:
     image: mysql:5.7
     environment:
-      MYSQL_DATABASE: 'db'
-      MYSQL_USER: 'user'
-      MYSQL_PASSWORD: 'password'      
-      MYSQL_ROOT_PASSWORD: 'password'
-      MYSQL_ROOT_HOST: '%'
+      MYSQL_DATABASE: "db"
+      MYSQL_USER: "user"
+      MYSQL_PASSWORD: "password"
+      MYSQL_ROOT_PASSWORD: "password"
+      MYSQL_ROOT_HOST: "%"
     ports:
-      - '3306:3306'
+      - "3306:3306"
     expose:
-      - '3306'
+      - "3306"
     volumes:
-      - './.mysql-data/db:/var/lib/mysql'
+      - mysql-data:/var/lib/mysql
 
-# for WebUI
+  # for WebUI
   adminer:
     image: adminer:4.8.1
     ports:
       - "8081:8080"
     volumes:
       - ./adminer-theme/adminer.css:/var/www/html/adminer.css
+
+volumes:
+  mysql-data:
